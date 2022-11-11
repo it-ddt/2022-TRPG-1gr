@@ -1,22 +1,25 @@
 import os
 import shop
+import hero_engine
+
+
+def make_hero(name="Безымянный", hp=1, money=0, potions=0) -> tuple:
+    return (name, hp, money, potions)
+
 
 def start_game():
     os.system("cls")
     print("Игра началась")
 
     # создаем игрока - КОРТЕЖ!!!
-    player_name = "Вася Питонов"
-    player_hp = 100
-    player_money = 50
-    player_potions = 1
-    player = (player_name, player_hp, player_money, player_potions)
+    player = hero_engine.make_hero()
 
     # начался главный цикл игры
     while True:
         os.system("cls")
 
         # показываем персонажа
+        # TODO: отправить в модуль hero_engine
         print("Персонаж: ")
         print("имя:", player[0])
         print("здоровье:", player[1])

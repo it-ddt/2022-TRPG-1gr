@@ -1,22 +1,20 @@
 import os
 
 
-def show(player):
+def show(player:tuple) -> tuple:
     # делаем ссылки на статы игрока
-    name = player[0]
-    hp = player[1]
-    money = player[2]
-    potions = player[3]
+    money = player[5]
+    potions = player[6]
 
     while True:
         # очищаем экран и показываем текст лавки
         os.system("cls")
-        print(f"{name} приехал в лавку алхимика")
+        print(f"{player[0]} приехал в лавку алхимика")
 
         # показываем персонажа
         print("Персонаж: ")
-        print("имя:", name)
-        print("здоровье:", hp)
+        print("имя:", player[0])
+        print("здоровье:", player[1])
         print("деньги:", money)
         print("зелья:", potions)
         print("")
@@ -36,4 +34,4 @@ def show(player):
                 print("Недостаточно монет!")
             input("\nНажмите ENTER чтобы продолжить")
         elif answer == "2":
-            return (name, hp, money, potions)
+            return (player[0], player[1], player[2], player[3], player[4], money, potions)
