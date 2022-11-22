@@ -1,72 +1,106 @@
-from random import choice, randint
+from random import randint, choice
 
-first_names = ("Жран", "Дрын", "Жлыг")
-last_name = ("Кривой", "Злопамятный", "Дикий")
+first_names = ("Жран", "Дрын", "Брысь", "Жлыг")
+last_names = ("Ужасный", "Зловонный", "Борзый", "Кровавый")
 
 
 def make_hero(
         name=None,
         hp_now=None,
+        hp_max=None,
         lvl=1,
-        xp_next=1000,
         xp_now=0,
         attack=1,
-        defence=0,
-        weapon=None,
-        shield=None,
-        money=None,
+        defence=1,
         luck=1,
+        money=None,
         inventory=None,
 ) -> list:
     """
-    Герой - это список
-    [0] name - имя персонажа
-    [1] hp_max - максимальное число жизней
-    [2] hp_now - текущее число жизней, контролирует игру
-    [3] lvl - уровень персонажа
-    [4] xp_next - опыта для следующего уровня
-    [5] xp_now - текущий опыт
-    [6] attack - сила атаки
-    [7] defence - защита
-    [8] weapon - оружие
-    [9] shield - щит
-    [10] money - деньги
-    [11] luck - удача
-    [12] inventory - инвентарь, список
+    Персонаж - это список
+    [0] name - имя
+    [1] hp_now - здоровье текущее
+    [2] hp_max - здоровье максимальное
+    [3] lvl - уровень
+    [4] xp_now - опыт текущий
+    [5] xp_next - опыт до следующего уровня
+    [6] attack - сила атаки, применяется в бою
+    [7] defence - защита, применяется в бою
+    [8] luck - удача
+    [9] money - деньги
+    [10] inventory - список предметов
     """
     if not name:
-        name = choice(first_names) + " " + choice(last_name)
-    
+        name = choice(first_names) + " " + choice(last_names)
+
     if not hp_now:
         hp_now = randint(1, 100)
-    hp_max = hp_now
+    
+    if not hp_max:
+        hp_max = hp_now
+
+    xp_next = lvl * 100
 
     if money is None:
-        hp_now = randint(1, 100)
+        money = randint(0, 100)
 
     if not inventory:
         inventory = []
+    
     return [
-            name,
-            hp_max,
-            hp_now,
-            lvl,
-            xp_next,
-            xp_now,
-            attack,
-            defence,
-            weapon,
-            shield,
-            money,
-            luck,
-            inventory,
-        ]
+        name,
+        hp_now,
+        hp_max,
+        lvl,
+        xp_now,
+        xp_next,
+        attack,
+        defence,
+        luck,
+        money,
+        inventory
+    ]
 
 
-def show_hero(hero):
+def show_hero(hero:list) -> None:
+    print("имя:", hero[0])
+    print("здоровье:", hero[1], "/", hero[2])
+    print("уровень:", hero[3])
+    print("опыт:", hero[4], "/", hero[5])
+    print("атака:", hero[6])
+    print("защита:", hero[7])
+    print("удача:", hero[8])
+    print("деньги:", hero[9])
+    print("инвентарь:", hero[10])  # TODO: показать предметы и их количество
+    print("")
+
+
+def levelup(hero: list) -> None:
+    """
+    TODO: что растет с уровнем?
+    TODO: не прекращать повышать уровень, пока текущий опыт больше нужного для повышения
+    """
+    if hero[4] >= hero[5]:
+        hero[3] += 1
+        hero[5] = hero[3] * 100
+        print(f"{hero[0]} получил {hero[3]} уровень\n")
+
+
+def buy_item(hero: list, price: int) -> None:
+    """
+    Покупает предмет за price монет и кладет его в инвентарь героя
+    """
+    if hero[9] >= price:
+        hero[9] -= price
+        hero[10].append("зелье")
+        print(f"{hero[0]} купил зелье за {price} монет!")
+    else:
+        print(f"У {hero[0]} нет столько монет!")
+
+
+def consume_item(hero: list, item: str) -> None:
+    """
+    TODO: Как найти предмет в инвентаре героя?
+    TODO: Удаляет предмет из инвентаря и дает герою эффект этого предмета
+    """
     pass
-
-
-p1 = make_hero()
-p2 = make_hero()
-p3 = make_hero()
