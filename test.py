@@ -1,8 +1,7 @@
 from main import *
 
+player = make_hero(name="Вася Питонов", inventory=["зелье"], hp_now=100)
 
-os.system("cls")
-p1 = make_hero(money=10)
-show_hero(p1)
-play_dice(p1, 5)
-show_hero(p1)
+game = True
+while game:
+    visit_hub(player)
